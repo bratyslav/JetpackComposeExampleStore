@@ -1,0 +1,15 @@
+=== Customer ===
+	List of sellers
+		List of products
+			Product view: add to backet
+	Bucket: create order
+	List of orders
+	Edit profile
+
+=== Seller ===
+	List of my products: add/remove/edit
+		Add new product
+		Edit product
+	List of orders
+	Edit profile
+
