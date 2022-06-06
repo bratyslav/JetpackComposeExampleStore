@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.jetpackexamplestore.backend.FirebaseBackend
+import com.example.jetpackexamplestore.bucket.BucketImpl
 import com.example.jetpackexamplestore.cache.RamCache
 import com.example.jetpackexamplestore.store.Store
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapperViewModel
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         hideSystemUI()
         setStatusMsg("Signing in...")
-        Store.initialize(FirebaseBackend(), RamCache())
+        Store.initialize(FirebaseBackend(), RamCache(), BucketImpl())
         startSignInActivity()
     }
 

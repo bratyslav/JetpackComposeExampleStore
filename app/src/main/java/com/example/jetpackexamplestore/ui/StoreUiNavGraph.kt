@@ -61,7 +61,7 @@ fun StoreUiNavGraph(
             )
         }
         composable(StoreUiDestinations.BUCKET) {
-            BucketView(navController, contentWrapperViewModel)
+            BucketView(navController, StoreUiState.bucketViewModel, contentWrapperViewModel)
         }
     }
 }

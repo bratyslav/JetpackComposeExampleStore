@@ -6,6 +6,7 @@ object Store {
 
     private lateinit var cache: Cache
     private lateinit var backend: Backend
+    lateinit var bucket: Bucket
 
     var customer: Customer? = null
         private set
@@ -13,9 +14,10 @@ object Store {
     var sellers: List<Seller>? = null
         private set
 
-    fun initialize(backend: Backend, cache: Cache) {
+    fun initialize(backend: Backend, cache: Cache, bucket: Bucket) {
         this.backend = backend
         this.cache = cache
+        this.bucket = bucket
     }
 
     fun getSellerProducts(

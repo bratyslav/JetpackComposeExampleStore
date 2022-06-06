@@ -29,12 +29,6 @@ class DownloadProductImageTask(private val product: Product): DownloadImageTask(
                     // TODO: implement
                 }
             )
-//            Handler().postDelayed({
-//                image.value = BitmapFactory.decodeResource(
-//                    MainActivity.mainContext!!.resources,
-//                    if (Random.nextBoolean()) R.drawable.kitty else R.drawable.dimon
-//                )
-//            }, 100)
         }
     }
 

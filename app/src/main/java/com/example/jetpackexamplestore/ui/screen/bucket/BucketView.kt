@@ -5,11 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +17,8 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.jetpackexamplestore.store.Store
+import com.example.jetpackexamplestore.store.entities.Product
 import com.example.jetpackexamplestore.ui.ChangeCountButton
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapper
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapperViewModel
@@ -31,13 +30,15 @@ val BUCKET_FONT_SIZE = 18.sp
 @Composable
 fun BucketView(
     navController: NavController,
+    viewModel: BucketViewModel,
     contentWrapperViewModel: ContentWrapperViewModel
 ) {
-    val state = remember { BucketViewModel.state }
+    val products = remember { viewModel.products }
+    val totalPrice = remember { viewModel.totalPrice }
     val shouldShowOrderPopup = remember { mutableStateOf(false) }
 
-        ContentWrapper(navController, contentWrapperViewModel) {
-        if (BucketViewModel.products.isNotEmpty()) {
+    ContentWrapper(navController, contentWrapperViewModel) {
+        if (Store.bucket.products.isNotEmpty()) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -45,8 +46,8 @@ fun BucketView(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    for (productWithCount in state.productsWithCount) {
-                        BucketProductCard(productWithCount)
+                    products.value.forEach {
+                        BucketProductCard(it.key, it.value)
                     }
                     Row(
                         modifier = Modifier
@@ -58,7 +59,10 @@ fun BucketView(
                             Text("Total", fontSize = BUCKET_FONT_SIZE)
                         }
                         BucketProductCardCell(alignment = Alignment.End) {
-                            Text(BucketViewModel.totalPrice.toString() + " $", fontSize = BUCKET_FONT_SIZE)
+                            Text(
+                                totalPrice.value.toString() + " $",
+                                fontSize = BUCKET_FONT_SIZE
+                            )
                         }
                     }
                 }
@@ -84,7 +88,7 @@ fun BucketView(
 }
 
 @Composable
-fun BucketProductCard(productWithCount: ProductWithCount) {
+fun BucketProductCard(product: Product, count: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -92,23 +96,28 @@ fun BucketProductCard(productWithCount: ProductWithCount) {
             .padding(25.dp),
     ) {
         BucketProductCardCell(weight = 2f) {
-            Text(productWithCount.product.name, fontSize = BUCKET_FONT_SIZE)
+            Text(product.name, fontSize = BUCKET_FONT_SIZE)
         }
         BucketProductCardCell {
             ChangeCountButton("-") {
-                BucketViewModel.decreaseProductCount(productWithCount.product)
+                // TODO: move to viewModel?
+                Store.bucket.removeProduct(product)
             }
             Text(
-                productWithCount.count.toString(),
+                count.toString(),
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp),
                 fontSize = BUCKET_FONT_SIZE
             )
             ChangeCountButton("+") {
-                BucketViewModel.increaseProductCount(productWithCount.product)
+                // TODO: move to viewModel?
+                Store.bucket.addProduct(product)
             }
         }
         BucketProductCardCell(alignment = Alignment.End) {
-            Text(productWithCount.totalPrice.toString() + " $", fontSize = BUCKET_FONT_SIZE)
+            Text(
+                Store.bucket.getTotalPriceOf(product).toString() + " $",
+                fontSize = BUCKET_FONT_SIZE
+            )
         }
     }
 }
@@ -132,7 +141,6 @@ fun OrderButton(shouldShowOrderPopup: MutableState<Boolean>) {
             .padding(10.dp)
             .clip(RoundedCornerShape(20.dp)),
         onClick = {
-            BucketViewModel.createOrder()
             shouldShowOrderPopup.value = true
         },
         colors = ButtonDefaults.buttonColors(

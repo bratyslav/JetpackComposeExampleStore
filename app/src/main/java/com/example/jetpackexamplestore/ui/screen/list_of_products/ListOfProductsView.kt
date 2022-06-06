@@ -32,6 +32,7 @@ fun ListOfProductsView(
     contentWrapperViewModel: ContentWrapperViewModel,
     viewModel: ListOfProductsViewModel
 ) {
+    val productsInBucket by remember { viewModel.productsInBucket }
     val products by viewModel.products.observeAsState(emptyList())
     val areProductsLoaded by viewModel.areProductsLoaded.observeAsState(false)
     val isProductPreviewShowing by viewModel.isProductPreviewShowing.observeAsState(false)

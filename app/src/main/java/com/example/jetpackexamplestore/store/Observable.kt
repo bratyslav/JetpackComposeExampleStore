@@ -5,6 +5,7 @@ interface Observable {
     val observers: ArrayList<Observer>
 
     fun addObserver(observer: Observer) {
+        // TODO: Memory leaks?
         observers.add(observer)
     }
 

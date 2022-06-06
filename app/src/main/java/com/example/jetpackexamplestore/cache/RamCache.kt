@@ -8,6 +8,7 @@ class RamCache: Cache {
 
     private var maxMemory: Long? = null
     private val cache = mutableListOf<Pair<String, Any>>()
+//    private val
 
     override fun get(key: String): Any? {
         val pair = cache.find { it.first == key }
@@ -15,6 +16,7 @@ class RamCache: Cache {
     }
 
     override fun save(key: String, obj: Any) {
+        // get free memory amount at this moment
         val freeMemory = Runtime.getRuntime().freeMemory()
         // save free memory amount at first call
         if (maxMemory == null) {
@@ -28,9 +30,6 @@ class RamCache: Cache {
         // TODO: do it async???
         while(freeMemory < maxMemory!! / 2 && cache.isNotEmpty()) {
             deleteOldest()
-            if (BuildConfig.DEBUG) {
-                Log.d("RamCache", "deleting oldest")
-            }
         }
     }
 

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackexamplestore.store.Store
 import com.example.jetpackexamplestore.store.entities.Product
 import com.example.jetpackexamplestore.ui.ChangeCountButton
 import com.example.jetpackexamplestore.ui.DownloadedImageProxy
@@ -74,29 +75,29 @@ fun ProductCard(product: Product, viewModel: ListOfProductsViewModel) {
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.weight(1f))
-            if (BucketViewModel.products.contains(product)) {
-                ProductCardManageCountButton(product)
+            if (viewModel.isBucketContains(product)) {
+                ProductCardManageCountButton(product, viewModel)
             } else {
-                ProductCardAddToBucketButton(product)
+                ProductCardAddToBucketButton(product, viewModel)
             }
         }
     }
 }
 
 @Composable
-fun ProductCardManageCountButton(product: Product) {
+fun ProductCardManageCountButton(product: Product, viewModel: ListOfProductsViewModel) {
     Button(
         content = {
             ChangeCountButton("-") {
-                BucketViewModel.decreaseProductCount(product)
+                viewModel.removeProduct(product)
             }
             Text(
-                BucketViewModel.countOf(product).toString(),
+                viewModel.countOf(product).toString(),
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp),
                 fontSize = BUCKET_FONT_SIZE
             )
             ChangeCountButton("+") {
-                BucketViewModel.increaseProductCount(product)
+                viewModel.addProduct(product)
             }
         },
         modifier = Modifier
@@ -108,13 +109,13 @@ fun ProductCardManageCountButton(product: Product) {
             contentColor = Color.Black
         ),
         onClick = {
-            BucketViewModel.increaseProductCount(product)
+            viewModel.addProduct(product)
         }
     )
 }
 
 @Composable
-fun ProductCardAddToBucketButton(product: Product) {
+fun ProductCardAddToBucketButton(product: Product, viewModel: ListOfProductsViewModel) {
     Button(
         content = {
             Text(
@@ -130,6 +131,6 @@ fun ProductCardAddToBucketButton(product: Product) {
             backgroundColor = Color.White,
             contentColor = Color.Black
         ),
-        onClick = { BucketViewModel.addProduct(product) }
+        onClick = { viewModel.addProduct(product) }
     )
 }
