@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -32,14 +33,19 @@ fun BucketView(
 ) {
     val products = remember { viewModel.products }
     val totalPrice = remember { viewModel.totalPrice }
-    val shouldShowOrderPopup = remember { mutableStateOf(false) }
+    val shouldShowOrderPopup = remember { viewModel.shouldShowOrderPopup }
+    val shouldShowSuccessOrderPopup = remember { viewModel.shouldShowSuccessOrderPopup }
+    // to blur a background when the popup is showing
+    val shouldBlurScreen = shouldShowOrderPopup.value || shouldShowSuccessOrderPopup.value
+    val blurRadius = if (shouldBlurScreen) 5.dp else 0.dp
 
     ContentWrapper(navController, contentWrapperViewModel) {
         if (App.bucket.products.isNotEmpty()) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(bottom = 10.dp, start = 5.dp, end = 5.dp),
+                    .padding(bottom = 10.dp, start = 5.dp, end = 5.dp)
+                    .blur(blurRadius),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
@@ -63,7 +69,7 @@ fun BucketView(
                         }
                     }
                 }
-                OrderButton(shouldShowOrderPopup)
+                OrderButton(viewModel)
             }
         } else {
             Row(
@@ -79,7 +85,10 @@ fun BucketView(
             }
         }
         if (shouldShowOrderPopup.value) {
-            OrderPopup(width = 350.dp)
+            OrderPopup(width = 350.dp, viewModel)
+        }
+        if (shouldShowSuccessOrderPopup.value) {
+            SuccessOrderPopup()
         }
     }
 }
@@ -123,7 +132,7 @@ fun BucketProductCard(product: Product, count: Int) {
 fun RowScope.BucketProductCardCell(
     weight: Float = 1f,
     alignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable() (RowScope.() -> Unit)
+    content: @Composable (RowScope.() -> Unit)
 ) {
     Column(modifier = Modifier.weight(weight)) {
         Row(modifier = Modifier.align(alignment), content = content)
@@ -131,14 +140,14 @@ fun RowScope.BucketProductCardCell(
 }
 
 @Composable
-fun OrderButton(shouldShowOrderPopup: MutableState<Boolean>) {
+fun OrderButton(viewModel: BucketViewModel) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
             .clip(RoundedCornerShape(20.dp)),
         onClick = {
-            shouldShowOrderPopup.value = true
+            viewModel.showOrderPopup()
         },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MAIN_BLUE,

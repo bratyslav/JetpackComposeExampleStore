@@ -57,7 +57,7 @@ fun NavBar(
 ) {
     val currentRoute = navController.currentBackStackEntry?.destination?.route
         ?: AppUiDestinations.LIST_OF_SELLERS
-    val state = remember { viewModel.state }
+    val bucketProductsCount = remember { viewModel.bucketProductsCount }
 
     Row(
         modifier = Modifier
@@ -98,8 +98,8 @@ fun NavBar(
                     contentDescription = "",
                     modifier = Modifier.size(35.dp)
                 )
-                if (state.value.bucketProductsCount.value > 0) {
-                    BucketCountView(state.value.bucketProductsCount.value)
+                if (bucketProductsCount.value > 0) {
+                    BucketCountView(bucketProductsCount.value)
                 }
             },
             route = AppUiDestinations.BUCKET,

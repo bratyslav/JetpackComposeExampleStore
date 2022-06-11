@@ -17,4 +17,6 @@ interface Bucket: Observable {
 
     fun getTotalPriceOfAllProducts(): Float
 
+    fun clear()
+
 }

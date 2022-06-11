@@ -46,4 +46,9 @@ class BucketImpl : Bucket {
         return sum
     }
 
+    override fun clear() {
+        _products.clear()
+        sendUpdateEvent()
+    }
+
 }
