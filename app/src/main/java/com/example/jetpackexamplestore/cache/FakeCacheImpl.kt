@@ -1,9 +1,9 @@
 package com.example.jetpackexamplestore.cache
 
-import com.example.jetpackexamplestore.store.Cache
+import com.example.jetpackexamplestore.app.Cache
 
 // Fake Cache implementation just for test purposes
-class FakeCache: Cache {
+class FakeCacheImpl: Cache {
 
     override fun get(key: String): Any? {
         return null

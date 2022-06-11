@@ -11,7 +11,7 @@ import com.example.jetpackexamplestore.ui.screen.profile.ProfileViewModel
     androidx.compose.animation.ExperimentalAnimationApi::class,
     coil.annotation.ExperimentalCoilApi::class
 )
-object StoreUiState {
+object AppUiState {
 
     private var currentSellerId: String = ""
     private var _listOfProductsViewModel: ListOfProductsViewModel? = null

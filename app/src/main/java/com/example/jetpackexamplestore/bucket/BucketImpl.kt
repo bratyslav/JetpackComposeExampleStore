@@ -1,8 +1,8 @@
 package com.example.jetpackexamplestore.bucket
 
-import com.example.jetpackexamplestore.store.Bucket
-import com.example.jetpackexamplestore.store.Observer
-import com.example.jetpackexamplestore.store.entities.Product
+import com.example.jetpackexamplestore.app.Bucket
+import com.example.jetpackexamplestore.Observer
+import com.example.jetpackexamplestore.model.Product
 
 class BucketImpl : Bucket {
 

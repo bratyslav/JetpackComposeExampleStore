@@ -1,14 +1,15 @@
 package com.example.jetpackexamplestore.backend
 
-import com.example.jetpackexamplestore.store.Backend
-import com.example.jetpackexamplestore.store.entities.*
+import android.util.Log
+import com.example.jetpackexamplestore.app.Backend
+import com.example.jetpackexamplestore.model.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.ktx.Firebase
 
-class FirebaseBackend : Backend {
+class FirebaseBackendImpl : Backend {
 
     private val firebaseUser = FirebaseAuth.getInstance().currentUser
     private val db = Firebase.firestore
@@ -68,7 +69,7 @@ class FirebaseBackend : Backend {
                     val description = document["description"] as? String ?: "nosurname"
                     val price = castToPrice(document["price"])
                     val imagesNames = document["images"] as? List<String> ?: emptyList()
-                    val product = Product(name, description, price, sellerId, document.id)
+                    val product = Product(name, description, price, sellerId, name) // document.id
                     product.imagesNames.addAll(imagesNames)
                     products.add(product)
                 }
@@ -100,6 +101,7 @@ class FirebaseBackend : Backend {
     ) {
         val storageRef = storage.reference
         val imageRef = storageRef.child(relativeUrl)
+        Log.wtf("Backend", imageRef.path)
 
         imageRef.getBytes(1024 * 1024 * 100)
             .addOnSuccessListener { onSuccess(it) }

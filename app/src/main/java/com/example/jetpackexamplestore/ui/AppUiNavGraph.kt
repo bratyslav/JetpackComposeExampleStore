@@ -19,24 +19,25 @@ import com.example.jetpackexamplestore.ui.screen.profile.ProfileView
 @ExperimentalCoilApi
 @ExperimentalAnimationApi
 @Composable
-fun StoreUiNavGraph(
+fun AppUiNavGraph(
     mainActivity: MainActivity,
     contentWrapperViewModel: ContentWrapperViewModel,
     navController: NavHostController,
-    startDestination: String = StoreUiDestinations.LIST_OF_SELLERS,
+    uiState: AppUiState,
+    startDestination: String = AppUiDestinations.LIST_OF_SELLERS,
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(StoreUiDestinations.LIST_OF_SELLERS) {
+        composable(AppUiDestinations.LIST_OF_SELLERS) {
             ListOfSellersView(
                 navController,
-                StoreUiState.listOfSellersViewModel,
+                uiState.listOfSellersViewModel,
                 contentWrapperViewModel
             )
         }
-        composable("${StoreUiDestinations.LIST_OF_PRODUCTS}/{sellerId}/{companyName}") { backStackEntry ->
+        composable("${AppUiDestinations.LIST_OF_PRODUCTS}/{sellerId}/{companyName}") { backStackEntry ->
             val sellerId = backStackEntry.arguments?.getString("sellerId") ?: run {
                 // TODO: handle it
                 return@composable
@@ -50,18 +51,18 @@ fun StoreUiNavGraph(
                 sellerId,
                 companyName,
                 contentWrapperViewModel,
-                StoreUiState.listOfProductsViewModel(sellerId)
+                uiState.listOfProductsViewModel(sellerId)
             )
         }
-        composable(StoreUiDestinations.PROFILE) {
+        composable(AppUiDestinations.PROFILE) {
             ProfileView(
                 navController,
                 contentWrapperViewModel,
-                StoreUiState.profileViewModel(mainActivity).loadProfile()
+                uiState.profileViewModel(mainActivity).loadProfile()
             )
         }
-        composable(StoreUiDestinations.BUCKET) {
-            BucketView(navController, StoreUiState.bucketViewModel, contentWrapperViewModel)
+        composable(AppUiDestinations.BUCKET) {
+            BucketView(navController, uiState.bucketViewModel, contentWrapperViewModel)
         }
     }
 }

@@ -1,13 +1,13 @@
 package com.example.jetpackexamplestore.backend
 
-import com.example.jetpackexamplestore.store.Backend
-import com.example.jetpackexamplestore.store.entities.Customer
-import com.example.jetpackexamplestore.store.entities.Order
-import com.example.jetpackexamplestore.store.entities.Product
-import com.example.jetpackexamplestore.store.entities.Seller
+import com.example.jetpackexamplestore.app.Backend
+import com.example.jetpackexamplestore.model.Customer
+import com.example.jetpackexamplestore.model.Order
+import com.example.jetpackexamplestore.model.Product
+import com.example.jetpackexamplestore.model.Seller
 
 // Fake Backend implementation just for test purposes
-class FakeBackend(private val isSuccessful: Boolean): Backend {
+class FakeBackendImpl(private val isSuccessful: Boolean): Backend {
 
     override fun downloadCustomerProfile(onSuccess: (Customer) -> Unit, onFailure: () -> Unit) {
         if (isSuccessful) {

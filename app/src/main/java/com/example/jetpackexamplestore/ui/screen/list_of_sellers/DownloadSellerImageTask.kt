@@ -3,7 +3,7 @@ package com.example.jetpackexamplestore.ui.screen.list_of_sellers
 import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import com.example.jetpackexamplestore.store.Store
+import com.example.jetpackexamplestore.app.App
 import com.example.jetpackexamplestore.ui.DownloadImageTask
 
 class DownloadSellerImageTask(private val sellerId: String): DownloadImageTask() {
@@ -18,7 +18,7 @@ class DownloadSellerImageTask(private val sellerId: String): DownloadImageTask()
         Log.d(this.javaClass.simpleName, "Image download: $sellerId")
         if (!isImageLoaded) {
             isImageLoaded = true
-            Store.getSellerImage(
+            App.getSellerImage(
                 sellerId,
                 onSuccess = { byteArray, isFromCache ->
                     image.value = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)

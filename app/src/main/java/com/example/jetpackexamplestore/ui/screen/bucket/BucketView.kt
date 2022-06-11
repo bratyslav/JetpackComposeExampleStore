@@ -1,24 +1,21 @@
 package com.example.jetpackexamplestore.ui.screen.bucket
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.jetpackexamplestore.store.Store
-import com.example.jetpackexamplestore.store.entities.Product
+import com.example.jetpackexamplestore.app.App
+import com.example.jetpackexamplestore.model.Product
 import com.example.jetpackexamplestore.ui.ChangeCountButton
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapper
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapperViewModel
@@ -38,7 +35,7 @@ fun BucketView(
     val shouldShowOrderPopup = remember { mutableStateOf(false) }
 
     ContentWrapper(navController, contentWrapperViewModel) {
-        if (Store.bucket.products.isNotEmpty()) {
+        if (App.bucket.products.isNotEmpty()) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -101,7 +98,7 @@ fun BucketProductCard(product: Product, count: Int) {
         BucketProductCardCell {
             ChangeCountButton("-") {
                 // TODO: move to viewModel?
-                Store.bucket.removeProduct(product)
+                App.bucket.removeProduct(product)
             }
             Text(
                 count.toString(),
@@ -110,12 +107,12 @@ fun BucketProductCard(product: Product, count: Int) {
             )
             ChangeCountButton("+") {
                 // TODO: move to viewModel?
-                Store.bucket.addProduct(product)
+                App.bucket.addProduct(product)
             }
         }
         BucketProductCardCell(alignment = Alignment.End) {
             Text(
-                Store.bucket.getTotalPriceOf(product).toString() + " $",
+                App.bucket.getTotalPriceOf(product).toString() + " $",
                 fontSize = BUCKET_FONT_SIZE
             )
         }

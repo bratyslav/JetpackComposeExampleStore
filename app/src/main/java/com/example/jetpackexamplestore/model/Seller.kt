@@ -1,4 +1,4 @@
-package com.example.jetpackexamplestore.store.entities
+package com.example.jetpackexamplestore.model
 
 data class Seller(
     val name: String,

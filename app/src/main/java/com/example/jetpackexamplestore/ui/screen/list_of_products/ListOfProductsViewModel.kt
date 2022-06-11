@@ -4,18 +4,18 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.jetpackexamplestore.store.Observer
-import com.example.jetpackexamplestore.store.Store
-import com.example.jetpackexamplestore.store.entities.Product
+import com.example.jetpackexamplestore.Observer
+import com.example.jetpackexamplestore.app.App
+import com.example.jetpackexamplestore.model.Product
 
 class ListOfProductsViewModel(sellerId: String): Observer {
 
     init {
-        Store.bucket.addObserver(this)
+        App.bucket.addObserver(this)
     }
 
     private val _products = MutableLiveData(emptyList<Product>())
-    private val _productsInBucket = mutableStateOf(Store.bucket.products.toMap())
+    private val _productsInBucket = mutableStateOf(App.bucket.products.toMap())
     private val _areProductsLoaded = MutableLiveData(false)
     private val _isProductPreviewShowing = MutableLiveData(false)
     val products: LiveData<List<Product>> = _products
@@ -30,7 +30,7 @@ class ListOfProductsViewModel(sellerId: String): Observer {
     }
 
     private fun loadProducts(sellerId: String) {
-        Store.getSellerProducts(
+        App.getSellerProducts(
             sellerId,
             onSuccess = {
                 _products.value = it
@@ -43,11 +43,11 @@ class ListOfProductsViewModel(sellerId: String): Observer {
     }
 
     fun addProduct(product: Product) {
-        Store.bucket.addProduct(product)
+        App.bucket.addProduct(product)
     }
 
     fun removeProduct(product: Product) {
-        Store.bucket.removeProduct(product)
+        App.bucket.removeProduct(product)
     }
 
     fun countOf(product: Product): Int =
@@ -66,7 +66,7 @@ class ListOfProductsViewModel(sellerId: String): Observer {
     }
 
     override fun update() {
-        _productsInBucket.value = Store.bucket.products.toMap()
+        _productsInBucket.value = App.bucket.products.toMap()
     }
 
 }

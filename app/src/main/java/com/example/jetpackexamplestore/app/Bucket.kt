@@ -1,6 +1,7 @@
-package com.example.jetpackexamplestore.store
+package com.example.jetpackexamplestore.app
 
-import com.example.jetpackexamplestore.store.entities.Product
+import com.example.jetpackexamplestore.Observable
+import com.example.jetpackexamplestore.model.Product
 
 interface Bucket: Observable {
 

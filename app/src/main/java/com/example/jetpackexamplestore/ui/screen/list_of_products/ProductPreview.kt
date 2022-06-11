@@ -12,28 +12,24 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.example.jetpackexamplestore.store.Store
-import com.example.jetpackexamplestore.store.entities.Product
+import com.example.jetpackexamplestore.model.Product
 import com.example.jetpackexamplestore.ui.ChangeCountButton
 import com.example.jetpackexamplestore.ui.DownloadedImageProxy
-import com.example.jetpackexamplestore.ui.screen.bucket.BUCKET_FONT_SIZE
-import com.example.jetpackexamplestore.ui.screen.bucket.BucketViewModel
 import com.example.jetpackexamplestore.ui.theme.MAIN_BLUE
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProductPreviewWrapper(visible: Boolean, viewModel: ListOfProductsViewModel) {
+    val previewHeight = LocalConfiguration.current.screenHeightDp * 0.7
     AnimatedVisibility(
         visible = visible,
         enter = slideInVertically(initialOffsetY = { 600 }),
@@ -49,7 +45,7 @@ fun ProductPreviewWrapper(visible: Boolean, viewModel: ListOfProductsViewModel) 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(600.dp)
+                    .height(previewHeight.dp)
                     .verticalScroll(rememberScrollState())
                     .background(color = Color.White)
             ) {

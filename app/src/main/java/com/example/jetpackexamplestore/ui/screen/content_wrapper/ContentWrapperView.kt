@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.jetpackexamplestore.ui.StoreUiDestinations
+import com.example.jetpackexamplestore.ui.AppUiDestinations
 import com.example.jetpackexamplestore.ui.theme.MAIN_BLUE
 
 @ExperimentalUnitApi
@@ -56,7 +56,7 @@ fun NavBar(
     viewModel: ContentWrapperViewModel,
 ) {
     val currentRoute = navController.currentBackStackEntry?.destination?.route
-        ?: StoreUiDestinations.LIST_OF_SELLERS
+        ?: AppUiDestinations.LIST_OF_SELLERS
     val state = remember { viewModel.state }
 
     Row(
@@ -73,10 +73,10 @@ fun NavBar(
                     modifier = Modifier.size(35.dp)
                 )
             },
-            route = StoreUiDestinations.LIST_OF_SELLERS,
+            route = AppUiDestinations.LIST_OF_SELLERS,
             currentRoute = currentRoute
         ) {
-            navController.navigate(StoreUiDestinations.LIST_OF_SELLERS)
+            navController.navigate(AppUiDestinations.LIST_OF_SELLERS)
         }
         NavBarButton(
             content = {
@@ -86,10 +86,10 @@ fun NavBar(
                     modifier = Modifier.size(35.dp)
                 )
             },
-            route = StoreUiDestinations.PROFILE,
+            route = AppUiDestinations.PROFILE,
             currentRoute = currentRoute
         ) {
-            navController.navigate(StoreUiDestinations.PROFILE)
+            navController.navigate(AppUiDestinations.PROFILE)
         }
         NavBarButton(
             content = {
@@ -102,10 +102,10 @@ fun NavBar(
                     BucketCountView(state.value.bucketProductsCount.value)
                 }
             },
-            route = StoreUiDestinations.BUCKET,
+            route = AppUiDestinations.BUCKET,
             currentRoute = currentRoute
         ) {
-            navController.navigate(StoreUiDestinations.BUCKET)
+            navController.navigate(AppUiDestinations.BUCKET)
         }
     }
 }

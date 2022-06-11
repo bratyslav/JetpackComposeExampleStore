@@ -1,6 +1,6 @@
 package com.example.jetpackexamplestore.ui
 
-object StoreUiDestinations {
+object AppUiDestinations {
 
     const val LIST_OF_SELLERS = "List of Sellers"
     const val LIST_OF_PRODUCTS = "List of Products"

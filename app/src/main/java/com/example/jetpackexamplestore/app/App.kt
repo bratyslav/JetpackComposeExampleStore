@@ -1,8 +1,8 @@
-package com.example.jetpackexamplestore.store
+package com.example.jetpackexamplestore.app
 
-import com.example.jetpackexamplestore.store.entities.*
+import com.example.jetpackexamplestore.model.*
 
-object Store {
+object App {
 
     private lateinit var cache: Cache
     private lateinit var backend: Backend

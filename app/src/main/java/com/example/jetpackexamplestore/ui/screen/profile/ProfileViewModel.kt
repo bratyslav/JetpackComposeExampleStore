@@ -7,9 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import coil.annotation.ExperimentalCoilApi
 import com.example.jetpackexamplestore.isNumeric
-import com.example.jetpackexamplestore.store.Store
-import com.example.jetpackexamplestore.store.entities.Customer
-import com.example.jetpackexamplestore.store.entities.Seller
+import com.example.jetpackexamplestore.app.App
+import com.example.jetpackexamplestore.model.Customer
 import com.example.jetpackexamplestore.ui.MainActivity
 
 class ProfileViewModel @OptIn(ExperimentalFoundationApi::class,
@@ -28,7 +27,7 @@ class ProfileViewModel @OptIn(ExperimentalFoundationApi::class,
     val areFieldsNotFilled: LiveData<Boolean> = _areFieldsNotFilled
 
     fun loadProfile(): ProfileViewModel {
-        val customer = Store.customer ?: return this
+        val customer = App.customer ?: return this
         _name.value = customer.name
         _surname.value = customer.surname
         _phoneNum.value = customer.phone
@@ -44,7 +43,7 @@ class ProfileViewModel @OptIn(ExperimentalFoundationApi::class,
 
         if (name.isNotEmpty() && surname.isNotEmpty() && phoneNum.isNotEmpty()) {
             val customer = Customer(name, surname, phoneNum)
-            Store.updateCustomerProfile(customer)
+            App.updateCustomerProfile(customer)
         } else {
             _areFieldsNotFilled.value = true
         }

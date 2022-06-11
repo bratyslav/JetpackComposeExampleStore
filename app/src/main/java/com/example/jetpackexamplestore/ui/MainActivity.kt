@@ -19,10 +19,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
-import com.example.jetpackexamplestore.backend.FirebaseBackend
+import com.example.jetpackexamplestore.backend.FirebaseBackendImpl
 import com.example.jetpackexamplestore.bucket.BucketImpl
-import com.example.jetpackexamplestore.cache.RamCache
-import com.example.jetpackexamplestore.store.Store
+import com.example.jetpackexamplestore.cache.RamCacheImpl
+import com.example.jetpackexamplestore.app.App
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapperViewModel
 import com.example.jetpackexamplestore.ui.theme.JetpackExampleStoreTheme
 import com.firebase.ui.auth.AuthUI
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         hideSystemUI()
         setStatusMsg("Signing in...")
-        Store.initialize(FirebaseBackend(), RamCache(), BucketImpl())
+        App.initialize(FirebaseBackendImpl(), RamCacheImpl(), BucketImpl())
         startSignInActivity()
     }
 
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
             return
         }
         if (result.resultCode == RESULT_OK) {
-            Store.isCustomerProfileExist { isExist ->
+            App.isCustomerProfileExist { isExist ->
                 setStatusMsg("Successfully signed in")
 
                 if (isExist) {
@@ -83,15 +83,15 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun onNewUser() {
-        Store.createCustomerProfile()
+        App.createCustomerProfile()
         startApp(isFirstStart = true)
     }
 
     private fun onUserExist() {
         // Load profile, show greetings and start app
-        Store.loadCustomerProfile(
+        App.loadCustomerProfile(
             onSuccess = {
-                val user = Store.customer ?: run {
+                val user = App.customer ?: run {
                     startApp(isFirstStart = false)
                     return@loadCustomerProfile
                 }
@@ -106,19 +106,20 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startApp(isFirstStart: Boolean) {
-        Store.loadSellers(
+        App.loadSellers(
             onSuccess = {
                 setContent {
                     val navController = rememberNavController()
                     MaterialTheme {
-                        StoreUiNavGraph(
+                        AppUiNavGraph(
                             this,
                             ContentWrapperViewModel(),
                             navController,
+                            AppUiState,
                             startDestination = if (isFirstStart)
-                                StoreUiDestinations.PROFILE
+                                AppUiDestinations.PROFILE
                             else
-                                StoreUiDestinations.LIST_OF_SELLERS
+                                AppUiDestinations.LIST_OF_SELLERS
                         )
                     }
                 }

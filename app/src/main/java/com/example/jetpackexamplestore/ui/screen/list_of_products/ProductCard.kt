@@ -18,12 +18,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jetpackexamplestore.store.Store
-import com.example.jetpackexamplestore.store.entities.Product
+import com.example.jetpackexamplestore.model.Product
 import com.example.jetpackexamplestore.ui.ChangeCountButton
 import com.example.jetpackexamplestore.ui.DownloadedImageProxy
 import com.example.jetpackexamplestore.ui.screen.bucket.BUCKET_FONT_SIZE
-import com.example.jetpackexamplestore.ui.screen.bucket.BucketViewModel
 import com.example.jetpackexamplestore.ui.theme.BACKGROUND_GRAY
 
 @ExperimentalAnimationApi

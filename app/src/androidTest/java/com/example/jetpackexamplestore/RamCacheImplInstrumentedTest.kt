@@ -1,9 +1,7 @@
 package com.example.jetpackexamplestore
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.test.platform.app.InstrumentationRegistry
-import com.example.jetpackexamplestore.cache.RamCache
-import com.example.jetpackexamplestore.ui.MainActivity
+import com.example.jetpackexamplestore.cache.RamCacheImpl
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -13,14 +11,9 @@ import org.junit.Test
     androidx.compose.animation.ExperimentalAnimationApi::class,
     coil.annotation.ExperimentalCoilApi::class
 )
-class RamCacheInstrumentedTest {
+class RamCacheImplInstrumentedTest {
 
-    private val cache = RamCache()
-
-    init {
-//        MainActivity.mainContext = InstrumentationRegistry.getInstrumentation().targetContext
-
-    }
+    private val cache = RamCacheImpl()
 
     @Test
     fun get_ReturnNull_when_doesNotSaved() {

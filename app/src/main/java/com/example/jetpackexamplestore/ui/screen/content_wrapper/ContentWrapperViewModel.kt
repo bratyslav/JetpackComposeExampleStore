@@ -2,12 +2,9 @@ package com.example.jetpackexamplestore.ui.screen.content_wrapper
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.jetpackexamplestore.store.Observer
-import com.example.jetpackexamplestore.store.Store
-import com.example.jetpackexamplestore.ui.screen.bucket.BucketViewModel
+import com.example.jetpackexamplestore.Observer
+import com.example.jetpackexamplestore.app.App
 
 data class ContentWrapperState(
     var bucketProductsCount: MutableState<Int>
@@ -16,7 +13,7 @@ data class ContentWrapperState(
 class ContentWrapperViewModel: ViewModel(), Observer {
 
     init {
-        Store.bucket.addObserver(this)
+        App.bucket.addObserver(this)
     }
 
     val state = mutableStateOf(ContentWrapperState(mutableStateOf(0)))
@@ -25,7 +22,7 @@ class ContentWrapperViewModel: ViewModel(), Observer {
 //    val bucketProductsCount: LiveData<Int> = _bucketProductsCount
 
     override fun update() {
-        state.value.bucketProductsCount.value = Store.bucket.products.size
+        state.value.bucketProductsCount.value = App.bucket.products.size
     }
     
 }

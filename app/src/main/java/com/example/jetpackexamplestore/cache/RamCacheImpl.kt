@@ -2,9 +2,9 @@ package com.example.jetpackexamplestore.cache
 
 import android.util.Log
 import com.example.jetpackexamplestore.BuildConfig
-import com.example.jetpackexamplestore.store.Cache
+import com.example.jetpackexamplestore.app.Cache
 
-class RamCache: Cache {
+class RamCacheImpl: Cache {
 
     private var maxMemory: Long? = null
     private val cache = mutableListOf<Pair<String, Any>>()

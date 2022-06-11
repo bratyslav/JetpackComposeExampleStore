@@ -14,11 +14,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.jetpackexamplestore.store.entities.Seller
+import com.example.jetpackexamplestore.model.Seller
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapper
 import androidx.compose.ui.unit.sp
 import com.example.jetpackexamplestore.ui.DownloadedImageProxy
-import com.example.jetpackexamplestore.ui.StoreUiDestinations
+import com.example.jetpackexamplestore.ui.AppUiDestinations
 import com.example.jetpackexamplestore.ui.screen.content_wrapper.ContentWrapperViewModel
 
 @ExperimentalAnimationApi
@@ -58,7 +58,7 @@ fun SellerCard(seller: Seller, navController: NavController) {
                 .padding(bottom = 24.dp)
                 .clickable {
                     navController.navigate(
-                        "${StoreUiDestinations.LIST_OF_PRODUCTS}/${seller.id}/${seller.company}"
+                        "${AppUiDestinations.LIST_OF_PRODUCTS}/${seller.id}/${seller.company}"
                     )
                 }
         ) {

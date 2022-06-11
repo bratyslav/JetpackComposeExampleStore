@@ -1,4 +1,4 @@
-package com.example.jetpackexamplestore.store
+package com.example.jetpackexamplestore.app
 
 interface Cache { // TODO: rename to CacheRepository?
 
